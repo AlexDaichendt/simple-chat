@@ -1,4 +1,4 @@
-import type { ClientMessage } from "../../shared.ts";
+import type { ClientMessage, ServerUserLeftMessage } from "../../shared.ts";
 import handleClientMessage from "./handleClientMessage.ts";
 import type { Room, WebSocketData } from "./types.ts";
 
@@ -60,6 +60,22 @@ const server = Bun.serve<WebSocketData>({
 
       if (!room) {
         return;
+      }
+
+      const sender = room.userConnections.get(ws);
+
+      if (sender) {
+        // notify other clients that a client has left
+        const leaveMessage: ServerUserLeftMessage = {
+          type: "USER_LEFT",
+          payload: {
+            user: sender,
+          },
+        };
+
+        for (const [socket] of room.userConnections) {
+          socket.send(JSON.stringify(leaveMessage));
+        }
       }
 
       if (room.userConnections.size === 0) {
