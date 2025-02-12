@@ -19,12 +19,14 @@ export type ChatState = {
 
 export type ChatAction =
   | { type: "ADD_MESSAGE"; payload: Message }
+  | { type: "DELETE_MESSAGE"; payload: string }
   | { type: "SET_USER"; payload: User }
   | { type: "SET_CONNECTED"; payload: boolean }
   | { type: "CLEAR_MESSAGES" };
 
 export type ChatActions = {
   addMessage: (message: Message) => void;
+  deleteMessage: (messageId: string) => void;
   setUser: (user: User) => void;
   setConnected: (isConnected: boolean) => void;
 };

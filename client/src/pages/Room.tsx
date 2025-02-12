@@ -33,8 +33,8 @@ function Room() {
         {!isConnected && <Connect onConnect={connect} />}
         {isConnected && (
           <>
-            <ChatMessages />
-            <ChatInput onSendMessage={sendMessage} />
+            <ChatMessages sendMessage={sendMessage} />
+            <ChatInput sendMessage={sendMessage} />
           </>
         )}
       </section>

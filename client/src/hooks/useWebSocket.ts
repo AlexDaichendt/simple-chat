@@ -28,6 +28,10 @@ export function useWebSocket(roomId: string) {
           actions.addMessage(message);
           break;
 
+        case "MESSAGE_DELETED":
+          actions.deleteMessage(message.payload.messageId);
+          break;
+
         default:
           console.error("Unknown message type", message);
       }
@@ -37,12 +41,8 @@ export function useWebSocket(roomId: string) {
 
   // Send a message to the server
   const sendMessage = useCallback(
-    (content: string) => {
+    (message: ClientMessage) => {
       if (ws?.readyState === WebSocket.OPEN) {
-        const message: ClientMessage = {
-          type: "CHAT_MESSAGE",
-          payload: { content },
-        };
         ws.send(JSON.stringify(message));
       } else {
         console.error("WebSocket connection not established");

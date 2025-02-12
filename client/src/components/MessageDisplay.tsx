@@ -1,9 +1,17 @@
 import React, { useEffect, useRef } from "react";
-import { ServerMessage } from "../../../shared";
+import {
+  ClientDeleteMessage,
+  ClientMessage,
+  ServerMessage,
+} from "../../../shared";
 import { useChatState } from "../contexts/ChatContext";
 import ChatMessage from "./ChatMessage";
 
-function ChatMessages() {
+interface MessageDisplayProps {
+  sendMessage: (message: ClientMessage) => void;
+}
+
+function ChatMessages({ sendMessage }: MessageDisplayProps) {
   const { state } = useChatState();
   const userId = state.currentUser?.userId;
   const messagesEndRef = useRef<HTMLDivElement>(null); // ref to an empty div at the end to scroll to
@@ -11,6 +19,19 @@ function ChatMessages() {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const onDelete = (messageId: string) => {
+    const deleteMessage: ClientDeleteMessage = {
+      type: "DELETE_MESSAGE",
+      payload: {
+        messageId,
+      },
+    };
+
+    sendMessage(deleteMessage);
+  };
+
+  const onEdit = (messageId: string) => {};
 
   // scroll to bottom when messages change
   useEffect(() => {
@@ -25,6 +46,8 @@ function ChatMessages() {
             message={message.payload}
             userId={userId}
             key={message.payload.id}
+            onDelete={onDelete}
+            onEdit={onEdit}
           />
         );
       case "USER_JOINED":

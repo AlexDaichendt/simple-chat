@@ -1,17 +1,25 @@
 import React, { useState } from "react";
+import { ClientChatMessage, ClientMessage } from "../../../shared";
 
 interface ChatInputProps {
-  onSendMessage: (content: string) => void;
+  sendMessage: (message: ClientMessage) => void;
 }
 
-function ChatInput({ onSendMessage }: ChatInputProps) {
+function ChatInput({ sendMessage }: ChatInputProps) {
   const [message, setMessage] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!message.trim()) return;
 
-    onSendMessage(message);
+    const chatMessage: ClientChatMessage = {
+      type: "CHAT_MESSAGE",
+      payload: {
+        content: message,
+      },
+    };
+
+    sendMessage(chatMessage);
     setMessage("");
   }
 

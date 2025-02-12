@@ -2,6 +2,7 @@ import { randomUUIDv7, type ServerWebSocket } from "bun";
 import type {
   ClientMessage,
   ServerChatMessage,
+  ServerMessageDeletedMessage,
   ServerRegistrationConfirmed,
   ServerUserJoinedMessage,
   User,
@@ -61,5 +62,20 @@ export default function handleClientMessage(
         socket.send(JSON.stringify(chatMessage));
       }
       break;
+
+    case "DELETE_MESSAGE":
+      // verify that the sender is the author of the message
+      // TODO: implement this, would need to store all messages on the server side
+
+      const deleteMessage: ServerMessageDeletedMessage = {
+        type: "MESSAGE_DELETED",
+        payload: {
+          messageId: data.payload.messageId,
+        },
+      };
+
+      for (const [socket] of room.userConnections) {
+        socket.send(JSON.stringify(deleteMessage));
+      }
   }
 }
