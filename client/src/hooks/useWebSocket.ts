@@ -9,7 +9,7 @@ import { useChatState } from "../contexts/ChatContext";
 export function useWebSocket(roomId: string) {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const { addMessage, currentUser, setCurrentUser } = useChatState();
+  const { state, actions } = useChatState();
 
   // Handle incoming messages
   const handleMessage = useCallback(
@@ -19,18 +19,18 @@ export function useWebSocket(roomId: string) {
       switch (message.type) {
         case "USER_JOINED":
           console.log("User joined", message.payload);
-          if (message.payload.user.name === currentUser?.name) {
-            setCurrentUser(message.payload.user);
+          if (message.payload.user.name === state.currentUser?.name) {
+            actions.setUser(message.payload.user);
           }
           break;
         case "CHAT_MESSAGE":
-          addMessage(message.payload);
+          actions.addMessage(message.payload);
           break;
         default:
           console.error("Unknown message type", message);
       }
     },
-    [currentUser, setCurrentUser, addMessage],
+    [state.currentUser, actions],
   );
 
   // Send a message to the server

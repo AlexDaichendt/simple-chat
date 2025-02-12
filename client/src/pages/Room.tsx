@@ -9,15 +9,15 @@ import { useChatState } from "../contexts/ChatContext";
 function Room() {
   const { roomId } = useParams();
   const { isConnected, connect, sendMessage } = useWebSocket(roomId ?? "");
-  const { currentUser } = useChatState();
+  const { state } = useChatState();
 
   return (
     <Layout>
       <section className="w-full">
         <h2 className="text-xl bg-gray-100 p-4 flex justify-between items-center rounded-md shadow-sm">
           <span className="font-medium">Room ID: {roomId}</span>
-          {currentUser && (
-            <span className="font-medium">User: {currentUser?.name}</span>
+          {state.currentUser && (
+            <span className="font-medium">User: {state.currentUser?.name}</span>
           )}
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium ${

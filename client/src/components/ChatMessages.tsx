@@ -2,11 +2,11 @@ import React from "react";
 import { useChatState } from "../contexts/ChatContext";
 
 function ChatMessages() {
-  const { messages } = useChatState();
+  const { state } = useChatState();
 
   return (
     <>
-      {messages.map((message) => (
+      {state.messages.map((message) => (
         <div key={message.id}>
           <div>
             <span>{message.author.name}</span>

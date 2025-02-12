@@ -6,7 +6,7 @@ interface ConnectProps {
 }
 
 function Connect({ onConnect }: ConnectProps) {
-  const { setCurrentUser } = useChatState();
+  const { actions } = useChatState();
   const [name, setName] = useState("");
 
   function handleConnect() {
@@ -14,8 +14,11 @@ function Connect({ onConnect }: ConnectProps) {
       return;
     }
 
-    // leave userId empty for now, it is server generated
-    setCurrentUser({ name, userId: "" });
+    actions.setUser({
+      name: name,
+      userId: "", // leave userId empty for now, it is server generated
+    });
+
     onConnect(name);
   }
 
