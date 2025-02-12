@@ -1,20 +1,30 @@
 import { createContext, useContext, Dispatch } from "react";
-import { ChatMessage, User } from "../../../shared";
+import {
+  ServerChatMessage,
+  ServerUserJoinedMessage,
+  ServerUserLeftMessage,
+  User,
+} from "../../../shared";
+
+export type Message =
+  | ServerChatMessage
+  | ServerUserJoinedMessage
+  | ServerUserLeftMessage;
 
 export type ChatState = {
-  messages: ChatMessage[];
+  messages: Message[];
   currentUser: User | null;
   isConnected: boolean;
 };
 
 export type ChatAction =
-  | { type: "ADD_MESSAGE"; payload: ChatMessage }
+  | { type: "ADD_MESSAGE"; payload: Message }
   | { type: "SET_USER"; payload: User }
   | { type: "SET_CONNECTED"; payload: boolean }
   | { type: "CLEAR_MESSAGES" };
 
 export type ChatActions = {
-  addMessage: (message: ChatMessage) => void;
+  addMessage: (message: Message) => void;
   setUser: (user: User) => void;
   setConnected: (isConnected: boolean) => void;
 };

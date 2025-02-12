@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import { ChatMessage, User } from "../../../shared";
-import { ChatContext } from "../contexts/ChatContext";
+import { User } from "../../../shared";
+import { ChatContext, Message } from "../contexts/ChatContext";
 import { chatReducer } from "../reducers/chatReducers";
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     state,
     dispatch,
     actions: {
-      addMessage: (message: ChatMessage) =>
+      addMessage: (message: Message) =>
         dispatch({ type: "ADD_MESSAGE", payload: message }),
       setUser: (user: User) => dispatch({ type: "SET_USER", payload: user }),
       setConnected: (isConnected: boolean) =>

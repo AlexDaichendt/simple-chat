@@ -21,11 +21,11 @@ export function useWebSocket(roomId: string) {
           actions.setUser(message.payload.user);
           break;
 
+        // intentional fallthrough
         case "USER_JOINED":
-          break;
-
+        case "USER_LEFT":
         case "CHAT_MESSAGE":
-          actions.addMessage(message.payload);
+          actions.addMessage(message);
           break;
 
         default:
