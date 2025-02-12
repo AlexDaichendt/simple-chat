@@ -16,9 +16,18 @@ function ChatMessageDisplay({
         className={`flex items-center gap-2 text-sm text-gray-600 mb-1
         ${isOwn ? "justify-end" : "justify-start"}`}
       >
-        {!isOwn && <span className="font-medium">{message.author.name}</span>}
-        <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
-        {isOwn && <span className="font-medium">{message.author.name}</span>}
+        {!isOwn && (
+          <span className="font-bold text-gray-700">{message.author.name}</span>
+        )}
+        <span className="font-medium opacity-45">
+          {new Date(message.timestamp).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </span>
+        {isOwn && (
+          <span className="font-bold text-gray-700">{message.author.name}</span>
+        )}
       </div>
       <div
         className={`max-w-[80%] p-3 rounded-2xl shadow-sm bg-gray-200

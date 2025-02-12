@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { ServerMessage } from "../../../shared";
 import { useChatState } from "../contexts/ChatContext";
 import ChatMessage from "./ChatMessage";
@@ -6,6 +6,16 @@ import ChatMessage from "./ChatMessage";
 function ChatMessages() {
   const { state } = useChatState();
   const userId = state.currentUser?.userId;
+  const messagesEndRef = useRef<HTMLDivElement>(null); // ref to an empty div at the end to scroll to
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [state.messages]);
 
   function renderMessage(message: ServerMessage) {
     switch (message.type) {
@@ -40,7 +50,12 @@ function ChatMessages() {
     }
   }
 
-  return <>{state.messages.map(renderMessage)}</>;
+  return (
+    <div className="min-h-[calc(100vh-theme('spacing.48'))] overflow-y-auto p-4">
+      {state.messages.map(renderMessage)}
+      <div ref={messagesEndRef} />
+    </div>
+  );
 }
 
 export default React.memo(ChatMessages);
