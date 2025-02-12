@@ -2,6 +2,7 @@ import { randomUUIDv7, type ServerWebSocket } from "bun";
 import type {
   ClientMessage,
   ServerChatMessage,
+  ServerRegistrationConfirmed,
   ServerUserJoinedMessage,
   User,
 } from "../../shared";
@@ -18,21 +19,23 @@ export default function handleClientMessage(
 
   switch (data.type) {
     case "JOIN":
-      const userId = randomUUIDv7();
-      const name = data.payload.username;
+      const user = {
+        name: data.payload.username,
+        userId: randomUUIDv7(),
+      };
+      room.userConnections.set(client, user);
 
-      room.userConnections.set(client, {
-        name,
-        userId,
-      });
+      const registrationConfirm: ServerRegistrationConfirmed = {
+        type: "REGISTRATION_CONFIRMED",
+        payload: { user },
+      };
+      client.send(JSON.stringify(registrationConfirm));
 
+      // notify everyone else that a new user has joined
       const joinMessage: ServerUserJoinedMessage = {
         type: "USER_JOINED",
         payload: {
-          user: {
-            name,
-            userId,
-          },
+          user,
         },
       };
 

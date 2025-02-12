@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import Connect from "../components/ConnectWithName";
 import { useWebSocket } from "../hooks/useWebSocket";
-import ChatMessages from "../components/ChatMessages";
+import ChatMessages from "../components/MessageDisplay";
 import ChatInput from "../components/ChatInput";
 import { useChatState } from "../contexts/ChatContext";
 

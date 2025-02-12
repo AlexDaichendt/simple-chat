@@ -58,6 +58,15 @@ export interface ChatMessage {
   author: User;
 }
 
+// sent to the newly registered client to confirm that the username was not taken
+export interface ServerRegistrationConfirmed {
+  type: "REGISTRATION_CONFIRMED";
+  payload: {
+    user: User;
+  };
+}
+
+// sent to all clients when a new client has joined the chat
 export interface ServerUserJoinedMessage {
   type: "USER_JOINED";
   payload: {
@@ -100,6 +109,7 @@ export interface ServerUserListMessage {
 }
 
 export type ServerMessage =
+  | ServerRegistrationConfirmed
   | ServerUserJoinedMessage
   | ServerUserLeftMessage
   | ServerChatMessage
