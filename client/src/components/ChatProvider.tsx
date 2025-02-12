@@ -14,6 +14,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     state,
     dispatch,
     actions: {
+      editMessage: (messageId: string, newContent: string) =>
+        dispatch({ type: "EDIT_MESSAGE", payload: { messageId, newContent } }),
       deleteMessage: (messageId: string) =>
         dispatch({ type: "DELETE_MESSAGE", payload: messageId }),
       addMessage: (message: Message) =>

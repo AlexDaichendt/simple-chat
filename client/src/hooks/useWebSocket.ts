@@ -32,6 +32,13 @@ export function useWebSocket(roomId: string) {
           actions.deleteMessage(message.payload.messageId);
           break;
 
+        case "MESSAGE_EDITED":
+          actions.editMessage(
+            message.payload.messageId,
+            message.payload.content,
+          );
+          break;
+
         default:
           console.error("Unknown message type", message);
       }

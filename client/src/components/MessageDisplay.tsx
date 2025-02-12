@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import {
   ClientDeleteMessage,
+  ClientEditMessage,
   ClientMessage,
   ServerMessage,
 } from "../../../shared";
@@ -31,7 +32,17 @@ function ChatMessages({ sendMessage }: MessageDisplayProps) {
     sendMessage(deleteMessage);
   };
 
-  const onEdit = (messageId: string) => {};
+  const onEdit = (messageId: string, newContent: string) => {
+    const editMessage: ClientEditMessage = {
+      type: "EDIT_MESSAGE",
+      payload: {
+        messageId,
+        content: newContent,
+      },
+    };
+
+    sendMessage(editMessage);
+  };
 
   // scroll to bottom when messages change
   useEffect(() => {

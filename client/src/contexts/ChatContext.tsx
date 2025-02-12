@@ -18,6 +18,7 @@ export type ChatState = {
 };
 
 export type ChatAction =
+  | { type: "EDIT_MESSAGE"; payload: { messageId: string; newContent: string } }
   | { type: "ADD_MESSAGE"; payload: Message }
   | { type: "DELETE_MESSAGE"; payload: string }
   | { type: "SET_USER"; payload: User }
@@ -25,6 +26,7 @@ export type ChatAction =
   | { type: "CLEAR_MESSAGES" };
 
 export type ChatActions = {
+  editMessage: (messageId: string, newContent: string) => void;
   addMessage: (message: Message) => void;
   deleteMessage: (messageId: string) => void;
   setUser: (user: User) => void;

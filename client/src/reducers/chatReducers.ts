@@ -2,6 +2,25 @@ import { ChatAction, ChatState } from "../contexts/ChatContext";
 
 export function chatReducer(state: ChatState, action: ChatAction): ChatState {
   switch (action.type) {
+    case "EDIT_MESSAGE":
+      return {
+        ...state,
+        messages: state.messages.map((message) => {
+          if ("type" in message && message.type === "CHAT_MESSAGE") {
+            if (message.payload.id === action.payload.messageId) {
+              return {
+                ...message,
+                payload: {
+                  ...message.payload,
+                  content: action.payload.newContent,
+                },
+              };
+            }
+          }
+          return message;
+        }),
+      };
+
     case "DELETE_MESSAGE":
       return {
         ...state,

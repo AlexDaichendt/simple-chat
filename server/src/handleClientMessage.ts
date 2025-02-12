@@ -3,6 +3,7 @@ import type {
   ClientMessage,
   ServerChatMessage,
   ServerMessageDeletedMessage,
+  ServerMessageEditedMessage,
   ServerRegistrationConfirmed,
   ServerUserJoinedMessage,
   User,
@@ -77,5 +78,25 @@ export default function handleClientMessage(
       for (const [socket] of room.userConnections) {
         socket.send(JSON.stringify(deleteMessage));
       }
+      break;
+
+    case "EDIT_MESSAGE":
+      // verify that the sender is the author of the message
+      // TODO: implement this, would need to store all messages on the server side
+      const editMessage: ServerMessageEditedMessage = {
+        type: "MESSAGE_EDITED",
+        payload: {
+          messageId: data.payload.messageId,
+          content: data.payload.content,
+        },
+      };
+
+      for (const [socket] of room.userConnections) {
+        socket.send(JSON.stringify(editMessage));
+      }
+      break;
+
+    default:
+      console.error("Unknown message type", data);
   }
 }
