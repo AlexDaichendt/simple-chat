@@ -7,11 +7,5 @@ export interface WebSocketData {
 
 export interface Room {
   roomId: string;
-  userConnections: Map<
-    string, // userId
-    {
-      user: User;
-      socket: ServerWebSocket<WebSocketData>;
-    }
-  >;
+  userConnections: Map<ServerWebSocket<WebSocketData>, User>;
 }

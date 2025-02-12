@@ -1,17 +1,24 @@
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
-import Connect from "../components/Connect";
+import Connect from "../components/ConnectWithName";
 import { useWebSocket } from "../hooks/useWebSocket";
+import ChatMessages from "../components/ChatMessages";
+import ChatInput from "../components/ChatInput";
+import { useChatState } from "../contexts/ChatContext";
 
 function Room() {
   const { roomId } = useParams();
-  const { isConnected, connect } = useWebSocket(roomId ?? "");
+  const { isConnected, connect, sendMessage } = useWebSocket(roomId ?? "");
+  const { currentUser } = useChatState();
 
   return (
     <Layout>
       <section className="w-full">
         <h2 className="text-xl bg-gray-100 p-4 flex justify-between items-center rounded-md shadow-sm">
           <span className="font-medium">Room ID: {roomId}</span>
+          {currentUser && (
+            <span className="font-medium">User: {currentUser?.name}</span>
+          )}
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium ${
               isConnected
@@ -24,6 +31,12 @@ function Room() {
         </h2>
 
         {!isConnected && <Connect onConnect={connect} />}
+        {isConnected && (
+          <>
+            <ChatMessages />
+            <ChatInput onSendMessage={sendMessage} />
+          </>
+        )}
       </section>
     </Layout>
   );

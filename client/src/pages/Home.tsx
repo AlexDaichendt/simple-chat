@@ -28,7 +28,7 @@ function Home() {
           <button
             type="button"
             onClick={onClickCreateRoom}
-            className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="btn w-full"
           >
             Create
           </button>
@@ -56,7 +56,7 @@ function Home() {
             type="button"
             onClick={onClickJoinRoom}
             disabled={!roomId}
-            className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full btn bg-green-600 hover:bg-green-700"
           >
             Join
           </button>

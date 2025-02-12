@@ -3,7 +3,7 @@
 
 export interface User {
   name: string;
-  uid: string;
+  userId: string;
 }
 
 export interface ClientJoinMessage {
@@ -51,40 +51,40 @@ export type ClientMessage =
 
 // Server messages
 
-interface ChatMessage {
+export interface ChatMessage {
   id: string;
   content: string;
   timestamp: number;
   author: User;
 }
 
-interface ServerUserJoinedMessage {
+export interface ServerUserJoinedMessage {
   type: "USER_JOINED";
   payload: {
     user: User;
   };
 }
 
-interface ServerUserLeftMessage {
+export interface ServerUserLeftMessage {
   type: "USER_LEFT";
   payload: {
     user: User;
   };
 }
 
-interface ServerChatMessage {
+export interface ServerChatMessage {
   type: "CHAT_MESSAGE";
   payload: ChatMessage;
 }
 
-interface ServerMessageDeletedMessage {
+export interface ServerMessageDeletedMessage {
   type: "MESSAGE_DELETED";
   payload: {
     messageId: string;
   };
 }
 
-interface ServerMessageEditedMessage {
+export interface ServerMessageEditedMessage {
   type: "MESSAGE_EDITED";
   payload: {
     messageId: string;
@@ -92,7 +92,7 @@ interface ServerMessageEditedMessage {
   };
 }
 
-interface ServerUserListMessage {
+export interface ServerUserListMessage {
   type: "USER_LIST";
   payload: {
     users: User[];

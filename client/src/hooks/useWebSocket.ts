@@ -1,14 +1,46 @@
 import { useCallback, useEffect, useState } from "react";
-import { ClientJoinMessage, ClientMessage } from "../../../shared";
+import {
+  ClientJoinMessage,
+  ClientMessage,
+  ServerMessage,
+} from "../../../shared";
+import { useChatState } from "../contexts/ChatContext";
 
 export function useWebSocket(roomId: string) {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const { addMessage, currentUser, setCurrentUser } = useChatState();
 
-  // Send a message to the server, useCallback to avoid unnecessary re-renders for components using this hook
+  // Handle incoming messages
+  const handleMessage = useCallback(
+    (event: MessageEvent) => {
+      const message = JSON.parse(event.data) as ServerMessage;
+
+      switch (message.type) {
+        case "USER_JOINED":
+          console.log("User joined", message.payload);
+          if (message.payload.user.name === currentUser?.name) {
+            setCurrentUser(message.payload.user);
+          }
+          break;
+        case "CHAT_MESSAGE":
+          addMessage(message.payload);
+          break;
+        default:
+          console.error("Unknown message type", message);
+      }
+    },
+    [currentUser, setCurrentUser, addMessage],
+  );
+
+  // Send a message to the server
   const sendMessage = useCallback(
-    (message: ClientMessage) => {
+    (content: string) => {
       if (ws?.readyState === WebSocket.OPEN) {
+        const message: ClientMessage = {
+          type: "CHAT_MESSAGE",
+          payload: { content },
+        };
         ws.send(JSON.stringify(message));
       } else {
         console.error("WebSocket connection not established");
@@ -17,6 +49,7 @@ export function useWebSocket(roomId: string) {
     [ws],
   );
 
+  // Connect to WebSocket server
   const connect = useCallback(
     (name: string) => {
       try {
@@ -35,6 +68,8 @@ export function useWebSocket(roomId: string) {
           websocket.send(JSON.stringify(message));
         };
 
+        websocket.onmessage = handleMessage;
+
         websocket.onclose = () => {
           console.log("WebSocket connection closed to room:", roomId);
           setIsConnected(false);
@@ -52,16 +87,18 @@ export function useWebSocket(roomId: string) {
         setIsConnected(false);
       }
     },
-    [roomId],
+    [roomId, handleMessage],
   );
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (ws) {
         ws.close();
       }
+      setIsConnected(false);
     };
   }, [ws]);
 
-  return { ws, isConnected, connect, sendMessage };
+  return { isConnected, connect, sendMessage };
 }

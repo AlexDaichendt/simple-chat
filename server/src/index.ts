@@ -78,7 +78,14 @@ const server = Bun.serve<WebSocketData>({
 
       const data = JSON.parse(message.toString()) as ClientMessage;
 
-      handleClientMessage(ws, data, room);
+      const sender = room.userConnections.get(ws);
+
+      if (!sender && data.type !== "JOIN") {
+        console.log("User not found in room", roomId);
+        return;
+      }
+
+      handleClientMessage(ws, data, room, sender);
     },
   },
 });
