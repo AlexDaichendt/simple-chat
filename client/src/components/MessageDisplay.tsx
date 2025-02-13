@@ -92,6 +92,7 @@ function MessageDisplay({ sendMessage }: MessageDisplayProps) {
             width={width}
             itemCount={state.messages.length}
             itemSize={90} // sadly, this will make the system messages really tall. apparently its non trivial to fix that
+            overscanCount={5}
           >
             {Row}
           </List>
