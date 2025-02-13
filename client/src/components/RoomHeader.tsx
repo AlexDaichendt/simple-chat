@@ -13,7 +13,9 @@ function RoomHeader(props: RoomHeaderProps) {
     <h2 className="text-xl bg-gray-100 p-4 flex justify-between items-center">
       <span className="font-medium">Room ID: {props.roomId}</span>
       {state.currentUser && (
-        <span className="font-medium">User: {state.currentUser?.name}</span>
+        <span className="font-medium hidden sm:block">
+          User: {state.currentUser?.name}
+        </span>
       )}
       <span
         className={`px-3 py-1 text-sm font-medium rounded-xl ${

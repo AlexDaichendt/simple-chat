@@ -37,9 +37,9 @@ function MessageDisplay({ sendMessage }: MessageDisplayProps) {
     sendMessage(editMessage);
   };
 
-  // Scroll to bottom when messages change
   useEffect(() => {
     if (listRef.current) {
+      // Scroll to bottom when messages change
       listRef.current.scrollToItem(state.messages.length - 1);
     }
   }, [state.messages]);
@@ -83,7 +83,7 @@ function MessageDisplay({ sendMessage }: MessageDisplayProps) {
   };
 
   return (
-    <div className="h-[calc(100vh-theme('spacing.48'))]">
+    <div className="h-[calc(100vh-theme('spacing.64'))]">
       <AutoSizer>
         {({ height, width }) => (
           <List

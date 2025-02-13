@@ -91,7 +91,7 @@ pnpm test
 - no user authentication
 - Client Websockets should be more robust, i.e. reconnecting
 - Client state does not persist on refresh
-- Client messages are rendered all at once, a virtual list would be better after a certain amount of messages
+- Performance: when sending a very large amount of messages, like 100000, the browser will freeze. This is not due to bad rendering per se, but the websocket message ingestion. Fixing this would be quite easy with a server-sided message debounce.
 - Test coverage very limited: only a single component is tested
 - Keyboard navigation and focus management could be improved
 - Entire deployment process is missing, i.e. Dockerfiles, CI/CD, reverse proxy
