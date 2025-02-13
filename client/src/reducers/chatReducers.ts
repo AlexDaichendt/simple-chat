@@ -52,6 +52,17 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
         ...state,
         messages: [],
       };
+    case "SET_PARTICIPANTS":
+      return {
+        ...state,
+        participants: action.payload,
+      };
+
+    case "SET_MENU":
+      return {
+        ...state,
+        selectedMenu: action.payload,
+      };
     default:
       return state;
   }

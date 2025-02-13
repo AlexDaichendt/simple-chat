@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { User } from "../../../shared";
-import { ChatContext, Message } from "../contexts/ChatContext";
+import { ChatContext, ChatState, Message } from "../contexts/ChatContext";
 import { chatReducer } from "../reducers/chatReducers";
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
@@ -8,6 +8,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     messages: [],
     currentUser: null,
     isConnected: false,
+    participants: [],
+    selectedMenu: "chat",
   });
 
   const value = {
@@ -23,6 +25,10 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       setUser: (user: User) => dispatch({ type: "SET_USER", payload: user }),
       setConnected: (isConnected: boolean) =>
         dispatch({ type: "SET_CONNECTED", payload: isConnected }),
+      setParticipants: (participants: User[]) =>
+        dispatch({ type: "SET_PARTICIPANTS", payload: participants }),
+      setMenu: (menu: ChatState["selectedMenu"]) =>
+        dispatch({ type: "SET_MENU", payload: menu }),
     },
   };
 

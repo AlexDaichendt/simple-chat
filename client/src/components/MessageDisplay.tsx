@@ -17,6 +17,9 @@ function ChatMessages({ sendMessage }: MessageDisplayProps) {
   const userId = state.currentUser?.userId;
   const messagesEndRef = useRef<HTMLDivElement>(null); // ref to an empty div at the end to scroll to
 
+  // this counter is used to generate unique keys for join/leave messages. This is not ideal and with more time I'd introduce server-side message IDs for all messages, not just chat messages
+  let messageCounter = 0;
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -65,7 +68,7 @@ function ChatMessages({ sendMessage }: MessageDisplayProps) {
         return (
           <div
             className="text-center text-gray-500 my-2"
-            key={`join-${message.payload.user.name}-${new Date()}`}
+            key={`join-${message.payload.user.name}-${messageCounter++}`}
           >
             {message.payload.user.name} joined!
           </div>
@@ -74,7 +77,7 @@ function ChatMessages({ sendMessage }: MessageDisplayProps) {
         return (
           <div
             className="text-center text-gray-500 my-2"
-            key={`leave-${message.payload.user.name}-${new Date()}`}
+            key={`leave-${message.payload.user.name}-${messageCounter++}`}
           >
             {message.payload.user.name} left!
           </div>

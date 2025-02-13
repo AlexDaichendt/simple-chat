@@ -15,6 +15,8 @@ export type ChatState = {
   messages: Message[];
   currentUser: User | null;
   isConnected: boolean;
+  participants: User[];
+  selectedMenu: "chat" | "participants";
 };
 
 export type ChatAction =
@@ -23,7 +25,9 @@ export type ChatAction =
   | { type: "DELETE_MESSAGE"; payload: string }
   | { type: "SET_USER"; payload: User }
   | { type: "SET_CONNECTED"; payload: boolean }
-  | { type: "CLEAR_MESSAGES" };
+  | { type: "CLEAR_MESSAGES" }
+  | { type: "SET_PARTICIPANTS"; payload: User[] }
+  | { type: "SET_MENU"; payload: ChatState["selectedMenu"] };
 
 export type ChatActions = {
   editMessage: (messageId: string, newContent: string) => void;
@@ -31,6 +35,8 @@ export type ChatActions = {
   deleteMessage: (messageId: string) => void;
   setUser: (user: User) => void;
   setConnected: (isConnected: boolean) => void;
+  setParticipants: (participants: User[]) => void;
+  setMenu: (menu: ChatState["selectedMenu"]) => void;
 };
 
 interface ChatContextType {

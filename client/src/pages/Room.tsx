@@ -5,38 +5,41 @@ import { useWebSocket } from "../hooks/useWebSocket";
 import ChatMessages from "../components/MessageDisplay";
 import ChatInput from "../components/ChatInput";
 import { useChatState } from "../contexts/ChatContext";
+import ParticipantList from "../components/ParticipantsList";
+import ChatMenu from "../components/ChatMenu";
+import RoomHeader from "../components/RoomHeader";
 
 function Room() {
-  const { roomId } = useParams();
+  const { roomId } = useParams(); // can never be null as this Room component is only ever rendered if react-router matches the route WITH a roomId
   const { isConnected, connect, sendMessage } = useWebSocket(roomId ?? "");
   const { state } = useChatState();
 
+  if (!isConnected) {
+    return (
+      <Layout>
+        <section className="w-full">
+          <RoomHeader roomId={roomId!} isConnected={isConnected} />
+          <Connect onConnect={connect} />
+        </section>
+      </Layout>
+    );
+  }
+
+  // is connected
   return (
     <Layout>
       <section className="w-full">
-        <h2 className="text-xl bg-gray-100 p-4 flex justify-between items-center rounded-md shadow-sm">
-          <span className="font-medium">Room ID: {roomId}</span>
-          {state.currentUser && (
-            <span className="font-medium">User: {state.currentUser?.name}</span>
-          )}
-          <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${
-              isConnected
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
-            }`}
-          >
-            {isConnected ? "Connected" : "Not Connected"}
-          </span>
-        </h2>
+        <RoomHeader roomId={roomId!} isConnected={isConnected} />
 
-        {!isConnected && <Connect onConnect={connect} />}
-        {isConnected && (
+        <ChatMenu />
+        {state.selectedMenu === "chat" && (
           <>
             <ChatMessages sendMessage={sendMessage} />
             <ChatInput sendMessage={sendMessage} />
           </>
         )}
+
+        {state.selectedMenu === "participants" && <ParticipantList />}
       </section>
     </Layout>
   );

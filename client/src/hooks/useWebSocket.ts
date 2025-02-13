@@ -39,6 +39,10 @@ export function useWebSocket(roomId: string) {
           );
           break;
 
+        case "USER_LIST":
+          actions.setParticipants(message.payload.users);
+          break;
+
         default:
           console.error("Unknown message type", message);
       }
