@@ -1,7 +1,14 @@
 {
-  "name": "server",
-  "module": "index.ts",
+  "name": "simple-chat-server",
+  "private": true,
+  "version": "1.0.0",
   "type": "module",
+  "author": {
+    "email": "git@daichendt.one",
+    "name": "Alexander Daichendt",
+    "url": "https://daichendt.one"
+  },
+  "packageManager": "bun@1.2.1",
   "scripts": {
     "dev": "bun --hot src/index.ts"
   },
