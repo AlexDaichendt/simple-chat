@@ -6,7 +6,7 @@ import {
   ServerMessage,
 } from "../../../shared";
 import { useChatState } from "../contexts/ChatContext";
-import ChatMessage from "./ChatMessage";
+import ChatMessageDisplay from "./ChatMessage/ChatMessageDisplay";
 
 interface MessageDisplayProps {
   sendMessage: (message: ClientMessage) => void;
@@ -56,7 +56,7 @@ function ChatMessages({ sendMessage }: MessageDisplayProps) {
     switch (message.type) {
       case "CHAT_MESSAGE":
         return (
-          <ChatMessage
+          <ChatMessageDisplay
             message={message.payload}
             userId={userId}
             key={message.payload.id}

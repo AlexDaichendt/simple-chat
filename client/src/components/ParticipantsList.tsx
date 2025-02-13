@@ -5,7 +5,7 @@ function ParticipantList() {
 
   return (
     <>
-      <ul>
+      <ul role="list" aria-label="Participants list">
         {state.participants.map((participant) => (
           <li key={participant.userId} className="p-4 border-b border-gray-200">
             {participant.name}

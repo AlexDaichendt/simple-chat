@@ -30,16 +30,24 @@ function Room() {
     <Layout>
       <section className="w-full">
         <RoomHeader roomId={roomId!} isConnected={isConnected} />
+        <nav aria-label="Chat navigation">
+          <ChatMenu />
+        </nav>
 
-        <ChatMenu />
         {state.selectedMenu === "chat" && (
-          <>
+          <section aria-label="Chat Section" className="chat-section">
             <ChatMessages sendMessage={sendMessage} />
             <ChatInput sendMessage={sendMessage} />
-          </>
+          </section>
         )}
-
-        {state.selectedMenu === "participants" && <ParticipantList />}
+        {state.selectedMenu === "participants" && (
+          <section
+            aria-label="Participants list"
+            className="participants-section"
+          >
+            <ParticipantList />
+          </section>
+        )}
       </section>
     </Layout>
   );
