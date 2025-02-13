@@ -54,8 +54,3 @@ export const useChatState = () => {
   }
   return context;
 };
-
-export const useCurrentUser = () => {
-  const { state } = useChatState();
-  return state.currentUser;
-};
