@@ -48,19 +48,19 @@ cd client
 pnpm install
 
 # Install server dependencies
-cd ../server
+cd server
 bun install
 ```
 
 3. Start the development servers:
 
 ```bash
-# Start the backend server
-cd server
-pnpm run dev
-
 # In a new terminal, start the frontend
 cd client
+pnpm run dev
+
+# Start the backend server
+cd server
 bun run dev
 ```
 
