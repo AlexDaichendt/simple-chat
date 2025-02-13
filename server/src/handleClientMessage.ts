@@ -6,6 +6,7 @@ import type {
   ServerMessageEditedMessage,
   ServerRegistrationConfirmed,
   ServerUserJoinedMessage,
+  ServerUserListMessage,
   User,
 } from "../../shared";
 import type { Room, WebSocketData } from "./types";
@@ -43,6 +44,19 @@ export default function handleClientMessage(
 
       for (const [socket] of room.userConnections) {
         socket.send(JSON.stringify(joinMessage));
+      }
+
+      // send updated participants list
+      const userArray = Array.from(room.userConnections.values());
+      const userListMessage: ServerUserListMessage = {
+        type: "USER_LIST",
+        payload: {
+          users: userArray,
+        },
+      };
+
+      for (const [socket] of room.userConnections) {
+        socket.send(JSON.stringify(userListMessage));
       }
 
       break;

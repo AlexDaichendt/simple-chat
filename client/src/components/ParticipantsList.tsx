@@ -5,10 +5,11 @@ function ParticipantList() {
 
   return (
     <>
-      <h3 className="text-lg font-semibold">Participants</h3>
       <ul>
         {state.participants.map((participant) => (
-          <li key={participant.userId}>{participant.name}</li>
+          <li key={participant.userId} className="p-4 border-b border-gray-200">
+            {participant.name}
+          </li>
         ))}
       </ul>
     </>

@@ -1,4 +1,8 @@
-import type { ClientMessage, ServerUserLeftMessage } from "../../shared.ts";
+import type {
+  ClientMessage,
+  ServerUserLeftMessage,
+  ServerUserListMessage,
+} from "../../shared.ts";
 import handleClientMessage from "./handleClientMessage.ts";
 import type { Room, WebSocketData } from "./types.ts";
 
@@ -76,6 +80,21 @@ const server = Bun.serve<WebSocketData>({
         for (const [socket] of room.userConnections) {
           socket.send(JSON.stringify(leaveMessage));
         }
+      }
+
+      room.userConnections.delete(ws);
+
+      // send updated user list
+      const userArray = Array.from(room.userConnections.values());
+      const userListMessage: ServerUserListMessage = {
+        type: "USER_LIST",
+        payload: {
+          users: userArray,
+        },
+      };
+
+      for (const [socket] of room.userConnections) {
+        socket.send(JSON.stringify(userListMessage));
       }
 
       if (room.userConnections.size === 0) {

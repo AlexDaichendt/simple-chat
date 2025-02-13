@@ -25,7 +25,7 @@ function Room() {
     );
   }
 
-  // is connected
+  // View when is connected to the room
   return (
     <Layout>
       <section className="w-full">
