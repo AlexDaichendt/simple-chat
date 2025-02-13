@@ -39,7 +39,7 @@ function ChatMessageDisplay({
   return (
     <article
       key={message.id}
-      className={`mb-4 ${isOwn ? "ml-auto" : "mr-auto"}`}
+      className={`${isOwn ? "ml-auto" : "mr-auto"}`}
       aria-label={`Message from ${message.author.name} on ${timestamp}`}
     >
       <MessageHeader
