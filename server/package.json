@@ -8,7 +8,6 @@
     "name": "Alexander Daichendt",
     "url": "https://daichendt.one"
   },
-  "packageManager": "bun@1.2.1",
   "scripts": {
     "dev": "bun --hot src/index.ts"
   },

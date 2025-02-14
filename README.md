@@ -11,6 +11,7 @@ A real-time chat application built with React, TypeScript, and Bun, featuring We
 - Message editing and deletion
 - Participant list
 - Accessibility-focused UI
+- Emoji picker
 
 ## Technology Stack
 
@@ -30,8 +31,8 @@ A real-time chat application built with React, TypeScript, and Bun, featuring We
 
 ### Prerequisites
 - Node.js (v22 or later)
-- Bun runtime
-- pnpm package manager
+- Bun runtime (1.2.1)
+- pnpm package manager (tested with 10.4)
 
 ### Installation
 
@@ -65,7 +66,7 @@ bun run dev
 ```
 
 4. Open http://localhost:5173 in your browser
-
+5. A refresh might be necessary after starting the dev server. Might be something wrong with this vite version.
 
 ## Usage
 
@@ -74,7 +75,6 @@ bun run dev
 3. Start chatting!
 
 ## Testing
-
 
 Run the test suite:
 
@@ -91,7 +91,7 @@ pnpm test
 - no user authentication
 - Client Websockets should be more robust, i.e. reconnecting
 - Client state does not persist on refresh
-- Performance: when sending a very large amount of messages, like 100000, the browser will freeze. This is not due to bad rendering per se, but the websocket message ingestion. Fixing this would be quite easy with a server-sided message debounce.
+- Performance: when sending a very large amount of messages, like 100000, the browser will freeze. This is not due to bad rendering per se, but the websocket message ingestion. Fixing this would be quite easy with a server-sided message debounce and batching.
 - Test coverage very limited: only a single component is tested
 - Keyboard navigation and focus management could be improved
 - Entire deployment process is missing, i.e. Dockerfiles, CI/CD, reverse proxy
