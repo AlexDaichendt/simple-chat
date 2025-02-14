@@ -35,16 +35,13 @@ function Room() {
         </nav>
 
         {state.selectedMenu === "chat" && (
-          <section aria-label="Chat Section" className="chat-section">
+          <section aria-label="Chat Section">
             <ChatMessages sendMessage={sendMessage} />
             <ChatInput sendMessage={sendMessage} />
           </section>
         )}
         {state.selectedMenu === "participants" && (
-          <section
-            aria-label="Participants list"
-            className="participants-section"
-          >
+          <section aria-label="Participants list">
             <ParticipantList />
           </section>
         )}
