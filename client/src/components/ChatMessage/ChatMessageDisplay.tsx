@@ -59,7 +59,7 @@ function ChatMessageDisplay({
         ) : (
           <>
             <div
-              className={`max-w-[80%] p-3 rounded-2xl shadow-sm bg-gray-200
+              className={`max-w-[80%] p-3 rounded-2xl shadow-sm bg-gray-200 whitespace-pre-wrap
               ${isOwn ? "ml-auto rounded-tr-none" : "mr-auto rounded-tl-none"}`}
               aria-label="Message content"
             >
